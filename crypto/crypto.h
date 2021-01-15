@@ -4,6 +4,7 @@
 #include "crypto/sha3.hpp"
 #include "crypto/crc32.hpp"
 #include "crypto/keccak.hpp"
+#include "crypto/base64.hpp"
 
 /*! AMXX Module */
 #include "sdk/amxxmodule.h"

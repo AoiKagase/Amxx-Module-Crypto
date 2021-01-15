@@ -21,8 +21,8 @@ auto Crypto::Crypto_Hash(AMX* amx, cell* params) -> cell AMX_NATIVE_CALL {
 
 	int stringLength(0), hashTypeLength(0);
 
-	auto hashType = MF_GetAmxString(amx, params[arg_hashType], 0, nullptr);
-	auto string = MF_GetAmxString(amx, params[arg_string], 1, nullptr);
+	auto hashType 	= MF_GetAmxString(amx, params[arg_hashType], 0, nullptr);
+	auto string 	= MF_GetAmxString(amx, params[arg_string], 1, nullptr);
 
 	std::string checkHashType(hashType);
 
@@ -87,6 +87,18 @@ auto Crypto::Crypto_Hash(AMX* amx, cell* params) -> cell AMX_NATIVE_CALL {
 
 		auto hashedString = hash(std::string(string));
 		char* test = &hashedString[0];
+
+		MF_SetAmxString(amx, params[arg_result], hashedString.c_str(), hashedString.length());
+
+		return 0;
+	}
+	else if (checkHashType == "base64") {
+		BASE64 hash;
+		std::string iStringifiedText(string);
+		char ret[2048] = "\0";
+		int len;
+		hash.Encode(std::string(string).c_str(), std::string(string).size(), ret, &len);
+		std::string hashedString(ret);
 
 		MF_SetAmxString(amx, params[arg_result], hashedString.c_str(), hashedString.length());
 
